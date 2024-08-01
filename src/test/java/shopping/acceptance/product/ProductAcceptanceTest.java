@@ -141,4 +141,23 @@ public class ProductAcceptanceTest extends AcceptanceTest {
         final ExtractableResponse<Response> response = ProductAcceptanceSteps.readByShop(상점, customerAccessToken);
         ProductAcceptanceSteps.validateReadShop(response);
     }
+
+    @DisplayName("사용자는 상품에 대해서 좋아요를 할 수 있다.")
+    @Test
+    void likeProduct() {
+        AdminAcceptanceSteps.회원가입됨(AdminFixture.EMAIL, AdminFixture.NAME, AdminFixture.PASSWORD);
+        final String adminAccessToken = AdminAcceptanceSteps.로그인됨(AdminFixture.EMAIL, AdminFixture.PASSWORD);
+        final long 메인카테고리 = CategoryAcceptanceSteps.메인카테고리생성됨(CategoryFixture.NAME, CategoryFixture.ORDER, adminAccessToken);
+        final long 서브카테고리 = CategoryAcceptanceSteps.서브카테고리생성됨(CategoryFixture.SUB_NAME, CategoryFixture.SUB_ORDER, 메인카테고리, adminAccessToken);
+
+        SellerAcceptanceSteps.회원가입됨(SellerFixture.EMAIL, SellerFixture.NAME, SellerFixture.PASSWORD, SellerFixture.BIRTH, SellerFixture.ADDRESS, SellerFixture.PHONE);
+        final String sellerAccessToken = SellerAcceptanceSteps.로그인됨(SellerFixture.EMAIL, SellerFixture.PASSWORD);
+        final long 상점 = ShopAcceptanceSteps.상점생성됨(sellerAccessToken, ShopFixture.NAME);
+        final long 상품 = ProductAcceptanceSteps.상품등록됨(상점, 서브카테고리, NAME, AMOUNT, THUMBNAIL_IMAGE_URL, DETAILED_IMAGE_URLS, sellerAccessToken);
+
+        CustomerAcceptanceSteps.회원가입됨(CustomerFixture.EMAIL, CustomerFixture.NAME, CustomerFixture.PASSWORD, CustomerFixture.BIRTH, CustomerFixture.ADDRESS, CustomerFixture.PHONE);
+        final String customerAccessToken = CustomerAcceptanceSteps.로그인됨(CustomerFixture.EMAIL, CustomerFixture.PASSWORD);
+        final ExtractableResponse<Response> likeResponse = ProductAcceptanceSteps.like(상점, 상품, customerAccessToken);
+        ProductAcceptanceSteps.validateLike(likeResponse);
+    }
 }

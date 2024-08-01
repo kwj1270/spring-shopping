@@ -74,6 +74,17 @@ public class ProductAcceptanceSteps {
                 .extract();
     }
 
+    public static ExtractableResponse<Response> like(final long shopId, final long productId, final String accessToken) {
+        return RestAssured
+                .given()
+                .noContentType()
+                .header(new Header("Authorization", "Bearer " + accessToken))
+                .when()
+                .post(BASE_URL + "/" + shopId + PRODUCTS + "/" + productId + "/likes")
+                .then()
+                .extract();
+    }
+
     public static void validate(final ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
     }
@@ -116,5 +127,9 @@ public class ProductAcceptanceSteps {
         final ExtractableResponse<Response> response = ProductAcceptanceSteps.registerProduct(상점, 서브카테고리, productName, amount, thumbnailImageUrl, detailedImageUrls, sellerAccessToken);
         ProductAcceptanceSteps.validate(response);
         return response.body().jsonPath().getLong("id");
+    }
+
+    public static void validateLike(final ExtractableResponse<Response> response) {
+        assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 }

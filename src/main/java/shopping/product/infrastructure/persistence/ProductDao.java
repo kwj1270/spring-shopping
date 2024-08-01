@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import shopping.product.infrastructure.api.dto.ProductDetailResponse;
 import shopping.product.infrastructure.api.dto.ProductInfo;
+import shopping.product.infrastructure.persistence.product.mapper.ProductDetailMapper;
+import shopping.product.infrastructure.persistence.product.mapper.ProductListMapper;
 
 import javax.sql.DataSource;
 import java.util.List;
@@ -49,7 +51,7 @@ public class ProductDao {
         return namedParameterJdbcTemplate.query(
                 """
                         SELECT 
-                            p.name as product_name, p.amount, p.thumbnail_image_url, sc.name as category_name, s.name as shop_name, se.name as seller_name   
+                            p.name as product_name, p.amount, p.thumbnail_image_url, sc.name as category_name, s.name as shop_name, se.name as seller_name, (SELECT count(1) FROM product_likes pl WHERE pl.product_id = p.id) as like_count   
                         FROM products p
                         LEFT JOIN shops s ON p.shop_id = s.id 
                         LEFT JOIN sub_categories sc ON p.sub_category_id = sc.id 
@@ -72,7 +74,7 @@ public class ProductDao {
         return namedParameterJdbcTemplate.query(
                 """
                         SELECT 
-                            p.name as product_name, p.amount, p.thumbnail_image_url, sc.name as category_name, s.name as shop_name, se.name as seller_name   
+                            p.name as product_name, p.amount, p.thumbnail_image_url, sc.name as category_name, s.name as shop_name, se.name as seller_name, (SELECT count(1) FROM product_likes pl WHERE pl.product_id = p.id) as like_count   
                         FROM products p
                         LEFT JOIN shops s ON p.shop_id = s.id 
                         LEFT JOIN sub_categories sc ON p.sub_category_id = sc.id 

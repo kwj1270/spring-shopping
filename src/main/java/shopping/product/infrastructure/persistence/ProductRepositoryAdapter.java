@@ -1,14 +1,14 @@
-package shopping.product.infrastructure;
+package shopping.product.infrastructure.persistence;
 
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import shopping.product.domain.Product;
-import shopping.product.domain.repository.ProductRepository;
-import shopping.product.infrastructure.persistence.ProductEntity;
-import shopping.product.infrastructure.persistence.ProductEntityJpaRepository;
+import shopping.product.domain.product.Product;
+import shopping.product.domain.product.ProductRepository;
+import shopping.product.infrastructure.persistence.product.ProductEntity;
+import shopping.product.infrastructure.persistence.product.ProductEntityJpaRepository;
 
-import static shopping.product.infrastructure.ProductEntityMapper.domainToEntity;
-import static shopping.product.infrastructure.ProductEntityMapper.entityToDomain;
+import static shopping.product.infrastructure.persistence.product.mapper.ProductEntityMapper.domainToEntity;
+import static shopping.product.infrastructure.persistence.product.mapper.ProductEntityMapper.entityToDomain;
 
 @Component
 public class ProductRepositoryAdapter implements ProductRepository {

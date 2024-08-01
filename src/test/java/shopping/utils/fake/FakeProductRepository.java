@@ -1,7 +1,7 @@
 package shopping.utils.fake;
 
-import shopping.product.domain.Product;
-import shopping.product.domain.repository.ProductRepository;
+import shopping.product.domain.product.Product;
+import shopping.product.domain.product.ProductRepository;
 
 import java.util.HashMap;
 import java.util.Map;

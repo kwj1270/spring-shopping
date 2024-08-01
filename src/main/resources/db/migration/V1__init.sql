@@ -78,6 +78,17 @@ CREATE TABLE `product_detailed_images`
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
+CREATE TABLE `product_likes`
+(
+    `product_id`         bigint NOT NULL,
+    `customer_id`        bigint NOT NULL,
+    `created_at`         datetime DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`        datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    PRIMARY KEY (`product_id`, `customer_id`)
+)  ENGINE = InnoDB
+   DEFAULT CHARSET = utf8mb4
+   COLLATE = utf8mb4_0900_ai_ci;
+
 -- sellers definition
 
 CREATE TABLE `sellers`

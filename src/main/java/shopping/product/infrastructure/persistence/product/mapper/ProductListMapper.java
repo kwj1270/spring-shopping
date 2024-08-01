@@ -1,4 +1,4 @@
-package shopping.product.infrastructure.persistence;
+package shopping.product.infrastructure.persistence.product.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import shopping.product.infrastructure.api.dto.ProductInfo;
@@ -13,7 +13,8 @@ public class ProductListMapper implements RowMapper<ProductInfo> {
         return new ProductInfo(
                 rs.getString("product_name"),
                 rs.getLong("amount"),
-                rs.getString("thumbnail_image_url")
+                rs.getString("thumbnail_image_url"),
+                rs.getLong("like_count")
         );
     }
 }

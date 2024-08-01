@@ -1,17 +1,19 @@
-package shopping.product.application;
+package shopping.product.application.service;
 
 import org.springframework.stereotype.Service;
+import shopping.product.application.ProductRegistrationUseCase;
 import shopping.product.application.command.ProductRegistrationCommand;
 import shopping.product.application.query.ProductRegistrationQuery;
-import shopping.product.domain.Product;
-import shopping.product.domain.ProductDetailedImage;
+import shopping.product.domain.product.Product;
+import shopping.product.domain.product.ProductDetailedImage;
 import shopping.product.domain.ProductValidator;
-import shopping.product.domain.repository.ProductRepository;
+import shopping.product.domain.product.ProductRepository;
 
 @Service
 public class ProductService implements ProductRegistrationUseCase {
     private final ProductValidator productValidator;
     private final ProductRepository productRepository;
+
 
     public ProductService(final ProductRepository productRepository, final ProductValidator productValidator) {
         this.productRepository = productRepository;

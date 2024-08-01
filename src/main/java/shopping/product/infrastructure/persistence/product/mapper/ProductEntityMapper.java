@@ -1,9 +1,9 @@
-package shopping.product.infrastructure;
+package shopping.product.infrastructure.persistence.product.mapper;
 
-import shopping.product.domain.Product;
-import shopping.product.domain.ProductDetailedImage;
-import shopping.product.infrastructure.persistence.ProductDetailedImageEntity;
-import shopping.product.infrastructure.persistence.ProductEntity;
+import shopping.product.domain.product.Product;
+import shopping.product.domain.product.ProductDetailedImage;
+import shopping.product.infrastructure.persistence.product.ProductDetailedImageEntity;
+import shopping.product.infrastructure.persistence.product.ProductEntity;
 
 import java.util.List;
 

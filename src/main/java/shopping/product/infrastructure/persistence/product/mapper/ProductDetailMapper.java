@@ -1,4 +1,4 @@
-package shopping.product.infrastructure.persistence;
+package shopping.product.infrastructure.persistence.product.mapper;
 
 import org.springframework.jdbc.core.RowMapper;
 import shopping.product.infrastructure.api.dto.ProductDetailResponse;

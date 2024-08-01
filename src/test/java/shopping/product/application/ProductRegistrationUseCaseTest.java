@@ -6,8 +6,9 @@ import org.junit.jupiter.api.Test;
 import shopping.common.exception.ProductNameInvalidException;
 import shopping.product.application.command.ProductRegistrationCommand;
 import shopping.product.application.query.ProductRegistrationQuery;
+import shopping.product.application.service.ProductService;
 import shopping.product.domain.ProductValidator;
-import shopping.product.domain.repository.ProductRepository;
+import shopping.product.domain.product.ProductRepository;
 import shopping.utils.fake.FakeProductRepository;
 import shopping.utils.fixture.ProductFixture;
 

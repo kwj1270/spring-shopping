@@ -1,7 +1,7 @@
 package shopping.product.application.query;
 
-import shopping.product.domain.Product;
-import shopping.product.domain.ProductDetailedImage;
+import shopping.product.domain.product.Product;
+import shopping.product.domain.product.ProductDetailedImage;
 
 import java.util.List;
 
