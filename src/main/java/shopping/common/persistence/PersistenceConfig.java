@@ -1,10 +1,10 @@
-package shopping.common.jpa;
+package shopping.common.persistence;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 @EnableJpaAuditing
 @Configuration
-public class JpaConfig {
+public class PersistenceConfig {
 
 }

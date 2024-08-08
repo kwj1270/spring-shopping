@@ -1,13 +1,11 @@
 package shopping.customer.infrastructure.api;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import shopping.common.auth.Authorization;
 import shopping.common.auth.AuthorizationType;
 import shopping.common.auth.AuthorizationUser;
+import shopping.customer.application.CustomerRetirementUseCase;
 import shopping.customer.application.CustomerSignInUseCase;
 import shopping.customer.application.CustomerSignOutUseCase;
 import shopping.customer.application.CustomerSignUpUseCase;
@@ -24,11 +22,14 @@ public class CustomerApi {
     private final CustomerSignInUseCase customerSignInUseCase;
     private final CustomerSignUpUseCase customerSignUpUseCase;
     private final CustomerSignOutUseCase customerSignOutUseCase;
+    private final CustomerRetirementUseCase customerRetirementUseCase;
 
-    public CustomerApi(final CustomerSignInUseCase customerSignInUseCase, final CustomerSignUpUseCase customerSignUpUseCase, final CustomerSignOutUseCase customerSignOutUseCase) {
+    public CustomerApi(final CustomerSignInUseCase customerSignInUseCase, final CustomerSignUpUseCase customerSignUpUseCase,
+                       final CustomerSignOutUseCase customerSignOutUseCase, final CustomerRetirementUseCase customerRetirementUseCase) {
         this.customerSignInUseCase = customerSignInUseCase;
         this.customerSignUpUseCase = customerSignUpUseCase;
         this.customerSignOutUseCase = customerSignOutUseCase;
+        this.customerRetirementUseCase = customerRetirementUseCase;
     }
 
     @PostMapping("/sign-up")
@@ -48,6 +49,14 @@ public class CustomerApi {
             @Authorization({AuthorizationType.CUSTOMER}) final AuthorizationUser authorizationUser
     ) {
         customerSignOutUseCase.signOut(authorizationUser.userId());
+        return ResponseEntity.ok().build();
+    }
+
+    @DeleteMapping
+    public ResponseEntity<Void> leave(
+            @Authorization({AuthorizationType.CUSTOMER}) final AuthorizationUser authorizationUser
+    ) {
+        customerRetirementUseCase.leave(authorizationUser.userId());
         return ResponseEntity.ok().build();
     }
 }

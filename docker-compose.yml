@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   shopping-mysql:
-    container_name: shopping-db
+    container_name: shopping-mysql
     image: mysql:8.0.34
     restart: always
     ports:
@@ -11,7 +11,60 @@ services:
     volumes:
       - ./infra/mysql/initdb.d:/docker-entrypoint-initdb.d
   shopping-redis:
+    container_name: shopping-redis
     image: redis:7.2.5
     restart: always
     ports:
       - '6379:6379'
+  shopping-rabbitmq:
+    container_name: shopping-rabbitmq
+    hostname: "internal-queue"
+    image: "rabbitmq:3-management"
+    restart: always
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "admin"
+      RABBITMQ_DEFAULT_VHOST: "/"
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+  shopping-zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    container_name: shopping-zookeeper
+    environment:
+      ZOOKEEPER_SERVER_ID: 1
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - "22181:2181"
+  shopping-kafka:
+    image: confluentinc/cp-kafka:latest
+    container_name: shopping-kafka
+    ports:
+      - "9092:9092"
+      - "29092:29092"
+    depends_on:
+      - shopping-zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: "true"
+      KAFKA_ZOOKEEPER_CONNECT: shopping-zookeeper:2181
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INTERNAL:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: INTERNAL
+      KAFKA_ADVERTISED_LISTENERS: INTERNAL://shopping-kafka:29092,EXTERNAL://localhost:9092
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+  shopping-kafka-ui:
+    image: provectuslabs/kafka-ui:latest
+    container_name: shopping-kafka-ui
+    depends_on:
+      - shopping-zookeeper
+      - shopping-kafka
+    ports:
+      - "8989:8080"
+    environment:
+      - DYNAMIC_CONFIG_ENABLED=true
+      - KAFKA_CLUSTERS_0_NAME=local
+      - KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS=shopping-kafka:29092
+      - KAFKA_CLUSTERS_0_ZOOKEEPER=shopping-zookeeper:2181

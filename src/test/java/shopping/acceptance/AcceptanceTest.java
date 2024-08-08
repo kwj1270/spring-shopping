@@ -7,13 +7,17 @@ import org.junit.jupiter.api.extension.Extensions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import shopping.utils.testcontainer.KafkaTestContainerExtension;
 import shopping.utils.testcontainer.MySQLTestContainerExtension;
+import shopping.utils.testcontainer.RabbitMQTestContainerExtension;
 import shopping.utils.testcontainer.RedisTestContainerExtension;
 
 
 @Extensions({
         @ExtendWith(MySQLTestContainerExtension.class),
-        @ExtendWith(RedisTestContainerExtension.class)
+        @ExtendWith(RedisTestContainerExtension.class),
+        @ExtendWith(RabbitMQTestContainerExtension.class),
+        @ExtendWith(KafkaTestContainerExtension.class)
 })
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AcceptanceTest {

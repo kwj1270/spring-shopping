@@ -60,6 +60,16 @@ public class CustomerAcceptanceSteps {
                 .extract();
     }
 
+    public static ExtractableResponse<Response> leave(final String accessToken) {
+        return RestAssured
+                .given()
+                .header(new Header("Authorization", "Bearer " + accessToken))
+                .when()
+                .delete(USER_BASE_URL)
+                .then()
+                .extract();
+    }
+
     public static void validateCustomerSignUp(final ExtractableResponse<Response> response) {
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
     }

@@ -3,13 +3,13 @@ package shopping.product.infrastructure.persistence.like;
 import jakarta.persistence.EmbeddedId;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import shopping.common.jpa.BasedJpaEntity;
+import shopping.common.persistence.BasedEntity;
 
 import java.util.Objects;
 
 @Table(name = "product_likes")
 @Entity
-public class ProductLikeEntity extends BasedJpaEntity {
+public class ProductLikeEntity extends BasedEntity {
 
     @EmbeddedId
     private ProductLikeEntityId id;

@@ -25,10 +25,28 @@ CREATE TABLE `customers`
     `name`     varchar(255) DEFAULT NULL,
     `password` varchar(255) DEFAULT NULL,
     `phone`    varchar(255) DEFAULT NULL,
+    `created_at`         datetime DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`        datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_at`        datetime DEFAULT NULL,
     PRIMARY KEY (`id`),
     UNIQUE KEY `UKrfbvkrffamfql7cjmen8v976v` (`email`)
 ) ENGINE = InnoDB
   AUTO_INCREMENT = 1
+  DEFAULT CHARSET = utf8mb4
+  COLLATE = utf8mb4_0900_ai_ci;
+
+CREATE TABLE `customers_outbox`
+(
+    `id`                varchar(255) NOT NULL,
+    `payload`           text         NOT NULL,
+    `published`         tinyint(1)   DEFAULT false,
+    `event_type`        varchar(255) DEFAULT NULL,
+    `published_at`      datetime DEFAULT NULL,
+    `created_at`        datetime DEFAULT CURRENT_TIMESTAMP,
+    `modified_at`       datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_at`        datetime DEFAULT NULL,
+    PRIMARY KEY (`id`)
+) ENGINE = InnoDB
   DEFAULT CHARSET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
@@ -84,6 +102,7 @@ CREATE TABLE `product_likes`
     `customer_id`        bigint NOT NULL,
     `created_at`         datetime DEFAULT CURRENT_TIMESTAMP,
     `modified_at`        datetime DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    `deleted_at`        datetime DEFAULT NULL,
     PRIMARY KEY (`product_id`, `customer_id`)
 )  ENGINE = InnoDB
    DEFAULT CHARSET = utf8mb4

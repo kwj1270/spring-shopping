@@ -1,12 +1,13 @@
 package shopping.customer.infrastructure.persistence;
 
 import jakarta.persistence.*;
+import shopping.common.persistence.BasedEntity;
 
 import java.util.Objects;
 
 @Table(name = "customers")
 @Entity
-public class CustomerEntity {
+public class CustomerEntity extends BasedEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

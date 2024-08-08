@@ -10,7 +10,7 @@ import shopping.customer.domain.Customer;
 import shopping.customer.domain.repository.CustomerRepository;
 
 @Service
-public class CustomerService implements CustomerSignUpUseCase, CustomerSignInUseCase, CustomerSignOutUseCase {
+public class CustomerService implements CustomerSignUpUseCase, CustomerSignInUseCase, CustomerSignOutUseCase, CustomerRetirementUseCase {
 
     private final AccessTokenRepository accessTokenRepository;
     private final CustomerRepository customerRepository;
@@ -49,5 +49,11 @@ public class CustomerService implements CustomerSignUpUseCase, CustomerSignInUse
                 customerSignUpCommand.address(),
                 customerSignUpCommand.phone()
         );
+    }
+
+    @Override
+    public void leave(final long userId) {
+        final Customer customer = customerRepository.findById(userId);
+        customerRepository.leave(customer);
     }
 }

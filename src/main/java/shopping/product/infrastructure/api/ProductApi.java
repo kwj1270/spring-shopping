@@ -11,6 +11,7 @@ import shopping.product.application.command.ProductLikeCommand;
 import shopping.product.application.query.ProductRegistrationQuery;
 import shopping.product.infrastructure.api.dto.ProductRegistrationHttpRequest;
 import shopping.product.infrastructure.api.dto.ProductRegistrationHttpResponse;
+import shopping.customer.infrastructure.event.CustomerDomainEventRabbitMQPublisher;
 
 import java.net.URI;
 
@@ -20,12 +21,12 @@ public class ProductApi {
 
     private final ProductRegistrationUseCase productRegistrationUseCase;
     private final ProductLikeUseCase productLikeUseCase;
+    private final CustomerDomainEventRabbitMQPublisher customerDomainEventRabbitMQPublisher;
 
-
-    public ProductApi(final ProductRegistrationUseCase productRegistrationUseCase,
-                      final ProductLikeUseCase productLikeUseCase) {
+    public ProductApi(final ProductRegistrationUseCase productRegistrationUseCase, final ProductLikeUseCase productLikeUseCase, final CustomerDomainEventRabbitMQPublisher customerDomainEventRabbitMQPublisher) {
         this.productRegistrationUseCase = productRegistrationUseCase;
         this.productLikeUseCase = productLikeUseCase;
+        this.customerDomainEventRabbitMQPublisher = customerDomainEventRabbitMQPublisher;
     }
 
     @PostMapping("/{shopId}/products")

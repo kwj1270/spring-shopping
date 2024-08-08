@@ -1,5 +1,7 @@
 package shopping.acceptance.customer;
 
+import io.restassured.response.ExtractableResponse;
+import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import shopping.acceptance.AcceptanceTest;
@@ -104,5 +106,15 @@ public class CustomerAcceptanceTest extends AcceptanceTest {
 
         final var response = CustomerAcceptanceSteps.signOut(accessToken);
         CustomerAcceptanceSteps.validateSignOut(response);
+    }
+
+    @DisplayName("로그인 되어있다면 회원 탈퇴 할 수 있다")
+    @Test
+    void leave() {
+        CustomerAcceptanceSteps.signUp(EMAIL, NAME, PASSWORD, BIRTH, ADDRESS, PHONE);
+        final String accessToken = CustomerAcceptanceSteps.로그인됨(EMAIL, PASSWORD);
+
+        final ExtractableResponse<Response> response = CustomerAcceptanceSteps.leave(accessToken);
+        System.out.println(response);
     }
 }

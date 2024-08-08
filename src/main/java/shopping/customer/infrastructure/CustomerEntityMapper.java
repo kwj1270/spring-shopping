@@ -4,9 +4,6 @@ import shopping.customer.domain.Customer;
 import shopping.customer.infrastructure.persistence.CustomerEntity;
 
 public class CustomerEntityMapper {
-    private CustomerEntityMapper() {
-    }
-
     public static CustomerEntity domainToEntity(final Customer customer) {
         return new CustomerEntity(
                 customer.id(),

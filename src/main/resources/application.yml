@@ -18,7 +18,21 @@ spring:
       port: '${REDIS_PORT:6379}'
   flyway:
     enabled: true
+  rabbitmq:
+    host: '${RABBIT_MQ_HOST:localhost}'
+    port: '${RABBIT_MQ_PORT:5672}'
+    username: '${RABBIT_MQ_USERNAME:admin}'
+    password: '${RABBIT_MQ_PASSWORD:admin}'
+  kafka:
+    producer:
+      bootstrap-servers: '${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}'
+      acks: 0
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      properties:
+        enable.idempotence: true
+        transactional.id: shopping-producer
+
 service:
   abusing:
     url: '${SERVICE_ABUSING_URL:https://www.purgomalum.com/service/json?text=}'
-

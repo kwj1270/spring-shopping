@@ -40,4 +40,14 @@ public class FakeCustomerRepository implements CustomerRepository {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException());
     }
+
+    @Override
+    public Customer findById(final long userId) {
+        return storage.get(userId);
+    }
+
+    @Override
+    public void leave(final Customer customer) {
+        storage.remove(customer.id());
+    }
 }
