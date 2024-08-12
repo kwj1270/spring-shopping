@@ -6,6 +6,7 @@ import shopping.category.application.command.SubCategoryRegistrationCommand;
 import shopping.category.application.query.CategoryQuery;
 import shopping.category.domain.Category;
 import shopping.category.domain.repository.CategoryRepository;
+import shopping.common.aspect.MainCategoryLock;
 
 import java.util.List;
 
@@ -24,11 +25,13 @@ public class CategoryService implements CategoryRegistrationUseCase, SubCategory
         return new CategoryQuery(category);
     }
 
+    @MainCategoryLock(value = "#command.mainCategoryId()")
     @Override
     public CategoryQuery registerSub(final SubCategoryRegistrationCommand command) {
         final Category category = categoryRepository.findById(command.mainCategoryId());
         category.addSubCategory(command.name(), command.order(), command.adminId());
-        return new CategoryQuery(categoryRepository.save(category));
+        final Category updatedCategory = categoryRepository.save(category);
+        return new CategoryQuery(updatedCategory);
     }
 
     private Category init(final CategoryRegistrationCommand command) {

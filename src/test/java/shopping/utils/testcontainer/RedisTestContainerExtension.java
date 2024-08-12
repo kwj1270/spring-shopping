@@ -12,7 +12,7 @@ public class RedisTestContainerExtension implements Extension, BeforeAllCallback
     private static final RedisContainer REDIS_CONTAINER = new RedisContainer(DockerImageName.parse(DOCKER_IMAGE));
 
     @Override
-    public void beforeAll(final ExtensionContext extensionContext) throws Exception {
+    public void beforeAll(final ExtensionContext extensionContext) {
         if (REDIS_CONTAINER.isRunning()) {
             return;
         }

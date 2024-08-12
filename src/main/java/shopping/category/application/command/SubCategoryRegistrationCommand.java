@@ -20,5 +20,9 @@ public record SubCategoryRegistrationCommand(
         this.adminId = adminId;
         validateSelf(this);
     }
+
+    public long getMainCategoryId() {
+        return mainCategoryId;
+    }
 }
 
